@@ -28,6 +28,36 @@ export default (rootDirectory: string): Router | Router[] => {
   // Set up express router
   const router = Router();
 
+  router.get("/store/top-products", async (req, res) => {
+    const topProductsService = req.scope.resolve("topProductsService");
+    res.json({
+      products: await topProductsService.getTopProducts(),
+    });
+  });
+  router.get("/store/featured-products", async (req, res) => {
+    const featuredProductsService = req.scope.resolve(
+      "featuredProductsService"
+    );
+    res.json({
+      products: await featuredProductsService.getFeaturedProducts(),
+    });
+  });
+  router.get("/store/new-products", async (req, res) => {
+    const newProductsService = req.scope.resolve("newProductsService");
+    res.json({
+      products: await newProductsService.getNewProducts(),
+    });
+  });
+  router.get("/admin/products/:id/update-metadata", async (req, res) => {
+    const topProductsService = req.scope.resolve("topProductsService");
+    res.json({
+      products: await topProductsService.updateMetadata(
+        req.params.id,
+        req.body.metadata
+      ),
+    });
+  });
+
   // Set up root routes for store and admin endpoints, with appropriate CORS settings
   router.use("/store", cors(storeCorsOptions), bodyParser.json());
   router.use("/admin", cors(adminCorsOptions), bodyParser.json());
