@@ -81,7 +81,7 @@ class TopProductsService extends TransactionBaseService {
   }
 
   async updateMetadata(productId, newMetadata) {
-    await this.productService.update(productId, {
+    return await this.productService.update(productId, {
       metadata: { ...newMetadata },
     });
   }

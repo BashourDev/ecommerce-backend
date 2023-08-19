@@ -43,6 +43,7 @@
     "medusa-payment-manual": "^1.0.24",
     "medusa-payment-stripe": "^6.0.3",
     "prism-react-renderer": "^2.0.4",
+    "react-router-dom": "^6.15.0",
     "typeorm": "^0.3.16"
   },
   "devDependencies": {

@@ -48,7 +48,14 @@ export default (rootDirectory: string): Router | Router[] => {
       products: await newProductsService.getNewProducts(),
     });
   });
-  router.get("/admin/products/:id/update-metadata", async (req, res) => {
+
+  // Set up root routes for store and admin endpoints, with appropriate CORS settings
+  router.use("/store", cors(storeCorsOptions), bodyParser.json());
+  router.use("/admin", cors(adminCorsOptions), bodyParser.json());
+
+  router.post("/admin/products/update-metadata/:id", async (req, res) => {
+    console.log(req);
+
     const topProductsService = req.scope.resolve("topProductsService");
     res.json({
       products: await topProductsService.updateMetadata(
@@ -57,10 +64,6 @@ export default (rootDirectory: string): Router | Router[] => {
       ),
     });
   });
-
-  // Set up root routes for store and admin endpoints, with appropriate CORS settings
-  router.use("/store", cors(storeCorsOptions), bodyParser.json());
-  router.use("/admin", cors(adminCorsOptions), bodyParser.json());
 
   // Add authentication to all admin routes *except* auth and account invite ones
   router.use(/\/admin\/((?!auth)(?!invites).*)/, authenticate());
