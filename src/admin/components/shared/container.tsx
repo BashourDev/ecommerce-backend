@@ -3,9 +3,10 @@ import React, { PropsWithChildren } from "react";
 type Props = PropsWithChildren<{
   title?: string;
   description?: string;
+  Action?: any;
 }>;
 
-export const Container = ({ title, description, children }: Props) => {
+export const Container = ({ title, description, children, Action }: Props) => {
   return (
     <div className="border border-grey-20 rounded-rounded bg-white py-6 px-8 flex flex-col mb-base relative">
       <div>
@@ -13,6 +14,7 @@ export const Container = ({ title, description, children }: Props) => {
           {title && (
             <h2 className="text-[24px] leading-9 font-semibold">{title}</h2>
           )}
+          {Action ? <Action /> : null}
         </div>
         {description && (
           <p className="text-sm text-gray-500 mt-2">{description}</p>
