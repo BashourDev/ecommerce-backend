@@ -1,10 +1,10 @@
 import { Product } from "@medusajs/medusa";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useAdminCustomPost } from "medusa-react";
 import Button from "../../../shared/button";
 import Modal from "../index";
 import InputField from "../../../../components/custom/input-field";
+import useNotification from "../../../../../hooks/use-notification";
 
 type Props = {
   product: any;
@@ -13,6 +13,7 @@ type Props = {
 };
 
 const ProductArabicModal = ({ product, open, onClose }: Props) => {
+  const notification = useNotification();
   const [updatedProduct, setUpdatedProduct] = useState(product.metadata || {});
   const { mutate, isLoading } = useAdminCustomPost<any, any>(
     `/products/update-metadata/${product.id}`,
@@ -33,10 +34,15 @@ const ProductArabicModal = ({ product, open, onClose }: Props) => {
       { metadata: updatedProduct },
       {
         onSuccess(data, variables, context) {
-          console.log(data);
+          notification("Success", "Successfully updated details", "success");
+          onClose();
         },
         onError(error, variables, context) {
-          console.log("lalala", error);
+          notification(
+            "Error",
+            "Something went wrong, please try again",
+            "error"
+          );
         },
       }
     );
@@ -93,30 +99,6 @@ const ProductArabicModal = ({ product, open, onClose }: Props) => {
       </Modal.Body>
     </Modal>
   );
-};
-
-const getDefaultValues = (product: Product) => {
-  return {
-    general: {
-      title: product.title,
-      subtitle: product.subtitle,
-      material: product.material,
-      handle: product.handle!,
-      description: product.description || null,
-    },
-    organize: {
-      collection: product.collection
-        ? { label: product.collection.title, value: product.collection.id }
-        : null,
-      type: product.type
-        ? { label: product.type.value, value: product.type.id }
-        : null,
-      tags: product.tags ? product.tags.map((t) => t.value) : null,
-    },
-    discountable: {
-      value: product.discountable,
-    },
-  };
 };
 
 export default ProductArabicModal;
