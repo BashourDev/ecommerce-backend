@@ -54,11 +54,20 @@ export default (rootDirectory: string): Router | Router[] => {
   router.use("/admin", cors(adminCorsOptions), bodyParser.json());
 
   router.post("/admin/products/update-metadata/:id", async (req, res) => {
-    console.log(req);
-
     const topProductsService = req.scope.resolve("topProductsService");
     res.json({
       products: await topProductsService.updateMetadata(
+        req.params.id,
+        req.body.metadata
+      ),
+    });
+  });
+  router.post("/admin/collections/update-metadata/:id", async (req, res) => {
+    const updateCollectionService = req.scope.resolve(
+      "updateCollectionsService"
+    );
+    res.json({
+      products: await updateCollectionService.updateMetadata(
         req.params.id,
         req.body.metadata
       ),
