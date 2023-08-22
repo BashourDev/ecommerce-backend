@@ -73,7 +73,7 @@ const ProductArabicDetails = (props: WidgetProps) => {
     <>
       <Container
         title="Featured Product"
-        description="set it true to show in the featured products section"
+        description="Enable to show in the featured products section"
         Action={() => (
           <Switch
             checked={featured === "true"}

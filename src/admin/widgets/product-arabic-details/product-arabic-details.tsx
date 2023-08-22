@@ -22,7 +22,7 @@ const ProductArabicDetails = (props: WidgetProps) => {
     <>
       <Container
         title="Product Arabic Details"
-        description="set arabic details for the product to reach out to more people"
+        description="Set arabic details for the product to reach out to more people"
         Action={() => <EditIcon onClick={() => setOpen(true)} />}
       >
         <Detail title="Title" value={product.metadata?.__arabic_title} />
